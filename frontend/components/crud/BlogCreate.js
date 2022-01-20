@@ -9,6 +9,7 @@ import { getTags } from '../../actions/tag';
 import { createBlog } from '../../actions/blog';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
+import { QuillModules, QuillFormats } from '../../helpers/quill';
 
 const CreateBlog = ({ router }) => {
     const blogFromLS = () => {
@@ -40,6 +41,7 @@ const CreateBlog = ({ router }) => {
     });
 
     const { error, sizeError, success, formData, title, hidePublishButton } = values;
+    const token = getCookie('token');
 
     useEffect(() => {
         setValues({ ...values, formData: new FormData() });
@@ -62,7 +64,7 @@ const CreateBlog = ({ router }) => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
-                setTags(data);
+                setTags(data); 
             }
         });
     };
@@ -83,7 +85,7 @@ const CreateBlog = ({ router }) => {
     };
 
     const handleChange = name => e => {
-        //console.log(e.target.value);
+        // console.log(e.target.value);
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value, formData, error: '' });
@@ -175,7 +177,13 @@ const CreateBlog = ({ router }) => {
                 </div>
 
                 <div className="form-group">
-                    <ReactQuill modules={CreateBlog.modules} formats={CreateBlog.formats} value={body} placeholder="Write something amazing..." onChange={handleBody} />
+                    <ReactQuill
+                        modules={QuillModules}
+                        formats={QuillFormats}
+                        value={body}
+                        placeholder="Write something amazing..."
+                        onChange={handleBody}
+                    />
                 </div>
 
                 <div>
@@ -188,8 +196,8 @@ const CreateBlog = ({ router }) => {
     };
 
     return (
-        <div className="container-fluid">
-             <div className="row">
+        <div className="container-fluid pb-5">
+            <div className="row">
                 <div className="col-md-8">
                     {createBlogForm()}
                     <div className="pt-3">
@@ -205,6 +213,7 @@ const CreateBlog = ({ router }) => {
                             <hr />
 
                             <small className="text-muted">Max size: 1mb</small>
+                            <br />
                             <label className="btn btn-outline-info">
                                 Upload featured image
                                 <input onChange={handleChange('photo')} type="file" accept="image/*" hidden />
@@ -227,34 +236,5 @@ const CreateBlog = ({ router }) => {
         </div>
     );
 };
-
-CreateBlog.modules = {
-    toolbar: [
-        [{ header: '1' }, { header: '2' }, { header: [3, 4, 5, 6] }, { font: [] }],
-        [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['link', 'image', 'video'],
-        ['clean'],
-        ['code-block']
-    ]
-};
-
-CreateBlog.formats = [
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'link',
-    'image',
-    'video',
-    'code-block'
-];
 
 export default withRouter(CreateBlog);
