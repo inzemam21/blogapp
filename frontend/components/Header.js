@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { signout, isAuth } from '../actions/auth';
+import Link from 'next/link';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import Link from 'next/link';
 import { APP_NAME } from '../config';
+import { signout, isAuth } from '../actions/auth';
 import {
   Collapse,
   Navbar,
@@ -39,15 +39,16 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-          <>
+            <React.Fragment>
               <NavItem>
                 <Link href="/blogs">
                   <NavLink>Blogs</NavLink>
                 </Link>
               </NavItem>
-            </>
-          {!isAuth() && (
-              <>
+            </React.Fragment>
+
+            {!isAuth() && (
+              <React.Fragment>
                 <NavItem>
                   <Link href="/signin">
                     <NavLink>Signin</NavLink>
@@ -58,10 +59,10 @@ const Header = () => {
                     <NavLink>Signup</NavLink>
                   </Link>
                 </NavItem>
-              </>
+              </React.Fragment>
             )}
 
-{isAuth() && isAuth().role === 0 && (
+            {isAuth() && isAuth().role === 0 && (
               <NavItem>
                 <Link href="/user">
                   <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
@@ -69,7 +70,7 @@ const Header = () => {
               </NavItem>
             )}
 
-{isAuth() && isAuth().role === 1 && (
+            {isAuth() && isAuth().role === 1 && (
               <NavItem>
                 <Link href="/admin">
                   <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>

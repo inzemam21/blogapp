@@ -10,7 +10,7 @@ const Admin = ({ children }) => {
             Router.push(`/`);
         }
     }, []);
-    return <>{children}</>;
+    return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default Admin;

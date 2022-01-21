@@ -71,7 +71,7 @@ const Category = () => {
             if (data.error) {
                 setValues({ ...values, error: data.error, success: false });
             } else {
-                setValues({ ...values, error: false, success: true, name: '', removed: removed, reload: !reload });
+                setValues({ ...values, error: false, success: false, name: '', removed: !removed, reload: !reload });
             }
         });
     };
@@ -99,8 +99,7 @@ const Category = () => {
     };
 
     const mouseMoveHandler = e => {
-        
-            setValues({ ...values, error: false, success: false, removed: '' });    
+        setValues({ ...values, error: false, success: false, removed: '' });
     };
 
     const newCategoryFom = () => (
@@ -118,7 +117,7 @@ const Category = () => {
     );
 
     return (
-        <>
+        <React.Fragment>
             {showSuccess()}
             {showError()}
             {showRemoved()}
@@ -126,7 +125,7 @@ const Category = () => {
                 {newCategoryFom()}
                 {showCategories()}
             </div>
-        </>
+        </React.Fragment>
     );
 };
 

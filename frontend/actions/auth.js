@@ -62,14 +62,12 @@ export const removeCookie = key => {
         });
     }
 };
-
 // get cookie
 export const getCookie = key => {
     if (process.browser) {
         return cookie.get(key);
     }
 };
-
 // localstorage
 export const setLocalStorage = (key, value) => {
     if (process.browser) {
@@ -82,7 +80,6 @@ export const removeLocalStorage = key => {
         localStorage.removeItem(key);
     }
 };
-
 // autheticate user by pass data to cookie and localstorage
 export const authenticate = (data, next) => {
     setCookie('token', data.token);

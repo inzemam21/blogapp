@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 
 exports.signup = (req, res) => {
+    // console.log(req.body);
     User.findOne({ email: req.body.email }).exec((err, user) => {
         if (user) {
             return res.status(400).json({
@@ -11,7 +12,7 @@ exports.signup = (req, res) => {
             });
         }
 
- const { name, email, password } = req.body;
+        const { name, email, password } = req.body;
         let username = shortId.generate();
         let profile = `${process.env.CLIENT_URL}/profile/${username}`;
 
@@ -67,8 +68,7 @@ exports.signout = (req, res) => {
 };
 
 exports.requireSignin = expressJwt({
-    secret: process.env.JWT_SECRET,
-    algorithms: ["HS256"],
+    secret: process.env.JWT_SECRET
 });
 
 exports.authMiddleware = (req, res, next) => {

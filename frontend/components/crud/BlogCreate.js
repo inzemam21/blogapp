@@ -64,7 +64,7 @@ const CreateBlog = ({ router }) => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
-                setTags(data); 
+                setTags(data);
             }
         });
     };

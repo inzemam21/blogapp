@@ -17,7 +17,7 @@ const CategoryTag = () => {
                             <Category />
                         </div>
                         <div className="col-md-6">
-                        <Tag />
+                            <Tag />
                         </div>
                     </div>
                 </div>
