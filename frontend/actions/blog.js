@@ -28,3 +28,28 @@ export const listBlogsWithCategoriesAndTags = () => {
         })
         .catch(err => console.log(err));
 };
+
+export const singleBlog = slug => {
+    return fetch(`${API}/blog/${slug}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const listRelated = blog => {
+    return fetch(`${API}/blogs/related`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(blog)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
