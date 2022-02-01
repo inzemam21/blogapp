@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { handleResponse } from '../../backend/controllers/auth';
 import { API } from '../config';
 
 export const userPublicProfile = username => {
@@ -38,6 +39,7 @@ export const userPublicProfile = username => {
             body: user
         })
             .then(response => {
+                handleResponse(response);
                 return response.json();
             })
             .catch(err => console.log(err));
