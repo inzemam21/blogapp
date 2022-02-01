@@ -11,6 +11,7 @@ export const createBlog = (blog, token) => {
     } else if (isAuth() && isAuth().role === 0) {
         createBlogEndpoint = `${API}/user/blog`;
     }
+
     return fetch(`${createBlogEndpoint}`, {
         method: 'POST',
         headers: {
@@ -26,12 +27,18 @@ export const createBlog = (blog, token) => {
         .catch(err => console.log(err));
 };
 
-export const listBlogsWithCategoriesAndTags = () => {
+export const listBlogsWithCategoriesAndTags = (skip, limit) => {
+    const data = {
+        limit,
+        skip
+    };
     return fetch(`${API}/blogs-categories-tags`, {
         method: 'POST',
         headers: {
-            Accept: 'application/json'
-        }
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     })
         .then(response => {
             return response.json();
@@ -39,7 +46,7 @@ export const listBlogsWithCategoriesAndTags = () => {
         .catch(err => console.log(err));
 };
 
-export const singleBlog = slug => {
+export const singleBlog = (slug = undefined) => {
     return fetch(`${API}/blog/${slug}`, {
         method: 'GET'
     })
@@ -64,7 +71,7 @@ export const listRelated = blog => {
         .catch(err => console.log(err));
 };
 
-export const list = (username) => {
+export const list = username => {
     let listBlogsEndpoint;
 
     if (username) {
@@ -72,6 +79,7 @@ export const list = (username) => {
     } else {
         listBlogsEndpoint = `${API}/blogs`;
     }
+
     return fetch(`${listBlogsEndpoint}`, {
         method: 'GET'
     })
@@ -113,6 +121,7 @@ export const updateBlog = (blog, token, slug) => {
     } else if (isAuth() && isAuth().role === 0) {
         updateBlogEndpoint = `${API}/user/blog/${slug}`;
     }
+
     return fetch(`${updateBlogEndpoint}`, {
         method: 'PUT',
         headers: {
@@ -129,9 +138,9 @@ export const updateBlog = (blog, token, slug) => {
 };
 
 export const listSearch = params => {
-    
+    console.log('search params', params);
     let query = queryString.stringify(params);
-   
+    console.log('query params', query);
     return fetch(`${API}/blogs/search?${query}`, {
         method: 'GET'
     })

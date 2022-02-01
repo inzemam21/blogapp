@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import { API } from '../config';
-import { handleResponse } from '../../backend/controllers/auth';
+import { handleResponse } from './auth';
 
 export const create = (category, token) => {
     return fetch(`${API}/category`, {

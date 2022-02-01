@@ -5,7 +5,7 @@ import { getCookie, isAuth } from '../../actions/auth';
 import { list, removeBlog } from '../../actions/blog';
 import moment from 'moment';
 
-const BlogRead = ({username}) => {
+const BlogRead = ({ username }) => {
     const [blogs, setBlogs] = useState([]);
     const [message, setMessage] = useState('');
     const token = getCookie('token');
@@ -46,7 +46,7 @@ const BlogRead = ({username}) => {
         if (isAuth() && isAuth().role === 0) {
             return (
                 <Link href={`/user/crud/${blog.slug}`}>
-                    <a className="btn btn-sm btn-warning">Update</a>
+                    <a className="ml-2 btn btn-sm btn-warning">Update</a>
                 </Link>
             );
         } else if (isAuth() && isAuth().role === 1) {
@@ -76,14 +76,14 @@ const BlogRead = ({username}) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             <div className="row">
                 <div className="col-md-12">
                     {message && <div className="alert alert-warning">{message}</div>}
                     {showAllBlogs()}
                 </div>
             </div>
-        </>
+        </React.Fragment>
     );
 };
 

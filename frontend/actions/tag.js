@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
-import { handleResponse } from '../../backend/controllers/auth';
 import { API } from '../config';
+import { handleResponse } from './auth';
 
 export const create = (tag, token) => {
     return fetch(`${API}/tag`, {

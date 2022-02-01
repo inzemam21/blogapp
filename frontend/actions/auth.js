@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
 import { API } from '../config';
+import Router from 'next/router';
 
 export const handleResponse = response => {
     if (response.status === 401) {

@@ -1,10 +1,9 @@
 const User = require('../models/user');
+const Blog = require('../models/blog');
 const shortId = require('shortid');
-const Blog = require('../models/blog')
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
-
-
+const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.signup = (req, res) => {
     // console.log(req.body);
@@ -52,9 +51,9 @@ exports.signin = (req, res) => {
             });
         }
         // generate a token and send to client
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '10' });
 
-        res.cookie('token', token, { expiresIn: '1d' });
+        res.cookie('token', token, { expiresIn: '10' });
         const { _id, username, name, email, role } = user;
         return res.json({
             token,
@@ -71,7 +70,7 @@ exports.signout = (req, res) => {
 };
 
 exports.requireSignin = expressJwt({
-    secret: process.env.JWT_SECRET
+    secret: process.env.JWT_SECRET // req.user
 });
 
 exports.authMiddleware = (req, res, next) => {
@@ -109,7 +108,7 @@ exports.adminMiddleware = (req, res, next) => {
 
 exports.canUpdateDeleteBlog = (req, res, next) => {
     const slug = req.params.slug.toLowerCase();
-    Blog.finOne({ slug }).exec((err, data) => {
+    Blog.findOne({ slug }).exec((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err)

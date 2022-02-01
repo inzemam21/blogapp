@@ -79,7 +79,7 @@ const SingleBlog = ({ blog, query }) => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {head()}
             <Layout>
                 <main>
@@ -99,7 +99,7 @@ const SingleBlog = ({ blog, query }) => {
                                 <div className="container">
                                     <h1 className="display-2 pb-3 pt-3 text-center font-weight-bold">{blog.title}</h1>
                                     <p className="lead mt-3 mark">
-                                    Written by{' '}
+                                        Written by{' '}
                                         <Link href={`/profile/${blog.postedBy.username}`}>
                                             <a>{blog.postedBy.username}</a>
                                         </Link>{' '}
@@ -127,13 +127,11 @@ const SingleBlog = ({ blog, query }) => {
                             <div className="row">{showRelatedBlog()}</div>
                         </div>
 
-                        <div className="container pb-5">
-                            <p>{showComments()}</p>
-                        </div>
+                        <div className="container pt-5 pb-5">{showComments()}</div>
                     </article>
                 </main>
             </Layout>
-        </>
+        </React.Fragment>
     );
 };
 
